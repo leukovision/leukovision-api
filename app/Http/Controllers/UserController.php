@@ -51,6 +51,11 @@ class UserController extends Controller
         }
     }
 
+    public function helloWorld()
+    {
+        return response()->json(['status' => 'success', 'data' => ['users' => "aku kaya"]], 200);
+    }
+
     public function index()
     {
         try {

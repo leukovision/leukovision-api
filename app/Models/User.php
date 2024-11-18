@@ -23,6 +23,10 @@ class User extends Authenticatable
         'full_name', //
     ];
 
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+
     /**
      * The attributes that should be hidden for serialization.
      *
