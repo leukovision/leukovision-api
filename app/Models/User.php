@@ -6,46 +6,42 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Hidehalo\Nanoid\Client;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'username',  //
-        'email',     //
-        'password',  //
-        'full_name', //
-    ];
-
+    protected $primaryKey = 'user_id';
+    public $incrementing = false;
     protected $keyType = 'string';
 
-    public $incrementing = false;
+    protected $fillable = [
+        'username', 
+        'email',    
+        'password', 
+        'full_name',
+    ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
-    protected $primaryKey = 'user_id';
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Generate NanoID untuk user_id
+        static::creating(function ($user) {
+            $client = new Client();
+            $nanoid = $client->generateId(size: 12);
+            $user->user_id = 'usr_' . $nanoid;
+        });
+    }
 }

@@ -13,8 +13,8 @@ return new class extends Migration
     {
             Schema::create('analysis_histories', function (Blueprint $table) {
                 $table->engine = 'InnoDB';
-                $table->bigIncrements('history_id');
-                $table->unsignedBigInteger('patient_id');
+                $table->string('history_id', 16)->primary();
+                $table->string('patient_id', 16);
                 $table->foreign('patient_id')
                       ->references('patient_id')
                       ->on('patients') 

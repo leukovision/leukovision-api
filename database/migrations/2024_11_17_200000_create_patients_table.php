@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->bigIncrements('patient_id');
+            $table->string('patient_id', 16)->primary();
             $table->string('name');
             $table->integer('age');
+            $table->string('gender');
             $table->text('address');
             $table->timestamps();
         });

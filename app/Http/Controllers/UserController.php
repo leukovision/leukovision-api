@@ -51,11 +51,6 @@ class UserController extends Controller
         }
     }
 
-    public function helloWorld()
-    {
-        return response()->json(['status' => 'success', 'data' => ['users' => "aku kaya"]], 200);
-    }
-
     public function index()
     {
         try {
@@ -78,10 +73,8 @@ class UserController extends Controller
     public function show($id)
     {
         try {
-            // Mencari pengguna berdasarkan ID
             $user = User::find($id);
 
-            // Jika pengguna tidak ditemukan
             if (!$user) {
                 return response()->json([
                     'status' => 'fail',
@@ -89,13 +82,11 @@ class UserController extends Controller
                 ], 404);
             }
 
-            // Jika pengguna ditemukan, kembalikan data
             return response()->json([
                 'status' => 'success',
                 'data' => $user,
             ], 200);
         } catch (\Exception $e) {
-            // Menangani error umum
             return response()->json([
                 'status' => 'error',
                 'message' => 'Terjadi kesalahan saat mengambil data pengguna',
@@ -107,10 +98,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            // Mencari pengguna berdasarkan ID
             $user = User::find($id);
 
-            // Jika pengguna tidak ditemukan
             if (!$user) {
                 return response()->json([
                     'status' => 'fail',
@@ -118,7 +107,6 @@ class UserController extends Controller
                 ], 404);
             }
 
-            // Validasi input
             $validated = $request->validate([
                 'username' => 'sometimes|required|string|unique:users,username,' . $user->user_id . ',user_id',
                 'password' => 'sometimes|required|string|min:8',
@@ -126,29 +114,24 @@ class UserController extends Controller
                 'full_name' => 'sometimes|required|string',
             ]);
 
-            // Hash password jika ada
             if (isset($validated['password'])) {
                 $validated['password'] = Hash::make($validated['password']);
             }
 
-            // Memperbarui data pengguna
             $user->update($validated);
 
-            // Mengembalikan respons sukses
             return response()->json([
                 'status' => 'success',
                 'message' => 'Pengguna berhasil diperbarui',
                 'data' => $user,
             ], 200);
         } catch (ValidationException $e) {
-            // Menangani error validasi
             return response()->json([
                 'status' => 'error',
                 'message' => 'Validasi gagal',
                 'errors' => $e->errors(),
             ], 422);
         } catch (\Exception $e) {
-            // Menangani error umum lainnya
             return response()->json([
                 'status' => 'error',
                 'message' => 'Terjadi kesalahan saat memperbarui pengguna',
@@ -160,10 +143,8 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-            // Mencari pengguna berdasarkan ID
             $user = User::find($id);
 
-            // Jika pengguna tidak ditemukan
             if (!$user) {
                 return response()->json([
                     'status' => 'fail',
@@ -171,16 +152,13 @@ class UserController extends Controller
                 ], 404);
             }
 
-            // Menghapus pengguna
             $user->delete();
 
-            // Mengembalikan respons sukses
             return response()->json([
                 'status' => 'success',
                 'message' => 'Pengguna berhasil dihapus',
             ], 200);
         } catch (\Exception $e) {
-            // Menangani error umum lainnya
             return response()->json([
                 'status' => 'error',
                 'message' => 'Terjadi kesalahan saat menghapus pengguna',

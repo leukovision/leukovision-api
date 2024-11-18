@@ -12,6 +12,7 @@ class PatientController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
             'age' => 'required|integer',
+            'gender' => 'required|string',
             'address' => 'required|string',
         ]);
 
@@ -22,7 +23,7 @@ class PatientController extends Controller
 
     public function index()
     {
-        $patients = Patient::all(['patient_id as id_patient', 'name', 'age']);
+        $patients = Patient::all(['patient_id as id_patient', 'name', 'age', 'address']);
         return response()->json(['status' => 'success', 'data' => ['patients' => $patients]], 200);
     }
 
