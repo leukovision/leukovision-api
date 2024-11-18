@@ -18,17 +18,26 @@ use App\Http\Controllers\AnalysisHistoryController;
 |
 */
 
-Route::post('/users', [UserController::class, 'store']);
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
-Route::put('/users/{id}', [UserController::class, 'update']);
-Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
-Route::post('/patients', [PatientController::class, 'store']);
-Route::get('/patients', [PatientController::class, 'index']);
-Route::get('/patients/{id}', [PatientController::class, 'show']);
-Route::put('/patients/{id}', [PatientController::class, 'update']);
-Route::delete('/patients/{id}', [PatientController::class, 'destroy']);
+
+// Route::prefix('users')->group(function () {
+//     Route::post('/', [UserController::class, 'store']);
+//     Route::get('/', [UserController::class, 'index']);
+//     Route::get('/{id}', [UserController::class, 'show']);
+//     Route::put('/{id}', [UserController::class, 'update']);
+//     Route::delete('/{id}', [UserController::class, 'destroy']);
+// });
+
+// Route::prefix('patients')->group(function () {
+//     Route::post('/', [PatientController::class, 'store']);
+//     Route::get('/', [PatientController::class, 'index']);
+//     Route::get('/{id}', [PatientController::class, 'show']);
+//     Route::put('/{id}', [PatientController::class, 'update']);
+//     Route::delete('/{id}', [PatientController::class, 'destroy']);
+// });
+
+Route::resource('patients', PatientController::class);
+Route::resource('users', UserController::class);
 
 Route::post('/analysis_history', [AnalysisHistoryController::class, 'store']);
 Route::get('/analysis_history', [AnalysisHistoryController::class, 'index']);
