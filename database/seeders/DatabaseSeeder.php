@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Patient;
 use App\Models\User;
+use App\Models\AnalysisHistory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,5 +25,6 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
         Patient::factory(10)->create();
+        AnalysisHistory::factory(10)->create();
     }
 }
